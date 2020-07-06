@@ -5,7 +5,10 @@
                 <h2>Libros disponibles</h2>
                 <div class="col-md-12">
                     <b-table striped hover :items="books" :fields="fields">
-
+                        <template v-slot:cell(actions)="data">
+                            <b-button size="sm" variant="primary" :to="{name: 'EditBook', params:{bookId: data.item.id}}">Editar</b-button>
+                            <b-button size="sm" variant="danger">Eliminar</b-button>
+                        </template>
                     </b-table>
                 </div>
             </div>
