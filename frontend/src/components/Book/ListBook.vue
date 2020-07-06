@@ -7,10 +7,11 @@
                     <b-table striped hover :items="books" :fields="fields">
                         <template v-slot:cell(actions)="data">
                             <b-button size="sm" variant="primary" :to="{name: 'EditBook', params:{bookId: data.item.id}}">Editar</b-button>
-                            <b-button size="sm" variant="danger">Eliminar</b-button>
+                            <b-button size="sm" @click="delete(data.item)" variant="danger">Eliminar</b-button>
                         </template>
                     </b-table>
                 </div>
+                <b-button size="md" :to="{name: 'NewBook'}" variant="info btn-block">Agregar un nuevo libro</b-button>
             </div>
         </div>
     </div>
@@ -42,6 +43,15 @@ export default {
                 console.log('error')
             })
         }, 
+        delete(id){
+            const path = 'http://127.0.0.1:8000/api/v1.0/books/'+id+'/'
+            axios.delete(path).then((response) => {
+                swal("Se ha eliminado libro", "", "success")
+            })
+            .catch((error)=>{
+                console.log('error')
+            })
+        }
     }
 }
 </script>

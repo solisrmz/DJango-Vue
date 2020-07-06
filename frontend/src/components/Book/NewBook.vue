@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-left">
-                <h2>Editar un libro</h2>
+                <h2>Nuevo libro</h2>
             </div>
         </div>
         <div class="row">
@@ -25,7 +25,7 @@
                             </div>
                             <div class="rows">
                                 <div class="col text-left">
-                                    <b-button type="submit" variant="primary">Editar</b-button>
+                                    <b-button type="submit" variant="primary">Crear</b-button>
                                     <b-button type="submit" variant="secondary" class="btn-large-space" :to="{name: 'ListBook'}">Cancelar</b-button>
                                 </div>
                             </div>
@@ -42,7 +42,6 @@ import swal from 'sweetalert'
     export default{
         data(){
             return {
-                bookId: this.$route.params.bookId,
                 form: {
                     title: '',
                     resume: ''
@@ -50,33 +49,21 @@ import swal from 'sweetalert'
             }
         },
         created(){
-            console.log(this.$route.params.bookId);
-            this.bookId = this.$route.params.bookId;
-            this.getBook()
         },
         methods:{
             onSubmit(evt){
                 evt.preventDefault()
-                const path = 'http://127.0.0.1:8000/api/v1.0/books/'+this.bookId+'/'
-                axios.put(path, this.form).then((response) => {
+                const path = 'http://127.0.0.1:8000/api/v1.0/books/'
+                axios.post(path, this.form).then((response) => {
                     this.form.title = response.data.title
                     this.form.resume = response.data.resume
-                    swal("Se ha actualizado este libro", "", "success")
+                    swal("Se ha agregado un nuevo libro", "", "success")
+                    location.href = '/books'
                 })
                 .catch((error)=>{
                     console.log('error')
                 })
             },
-            getBook(){
-                const path = 'http://127.0.0.1:8000/api/v1.0/books/'+this.bookId+'/'
-                axios.get(path).then((response) => {
-                    this.form.title = response.data.title
-                    this.form.resume = response.data.resume
-                })
-                .catch((error)=>{
-                    console.log('error')
-                })
-            }
         }
     }
 </script>
