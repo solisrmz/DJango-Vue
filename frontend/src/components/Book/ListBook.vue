@@ -1,17 +1,18 @@
 <template lang="html">
-    <div class="container">
+    <div class="container table-responsive">
+    <br/>
         <div class="row">
             <div class="col text-left">
                 <h2>Libros disponibles</h2>
+                <hr/>
                 <div class="col-md-12">
-                    <b-table striped hover :items="books" :fields="fields">
+                    <b-table striped hover bordered :items="books" :fields="fields">
                         <template v-slot:cell(actions)="data">
                             <b-button size="sm" variant="primary" :to="{name: 'EditBook', params:{bookId: data.item.id}}">Editar</b-button>
                             <b-button size="sm" @click="delete(data.item)" variant="danger">Eliminar</b-button>
                         </template>
                     </b-table>
                 </div>
-                <b-button size="md" :to="{name: 'NewBook'}" variant="info btn-block">Agregar un nuevo libro</b-button>
             </div>
         </div>
     </div>
